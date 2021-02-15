@@ -10,15 +10,15 @@ x3 = 250
 y3 = 200
 
 love.load = function ()
-    image = love.graphics.newImage("HSWH2x2.jpg")
+    image = love.graphics.newImage("Shrek_(character).png")
     print("spelet har laddat klart")
     print('escape to close down, r to restart game')
 end
 
 love.draw = function ()
-    love.graphics.draw(image, 500, 300)
+    love.graphics.draw(image, 300, 300)
     love.graphics.setColor(255, 255, 255)
-    love.graphics.circle("fill", x, y, 50)
+    love.graphics.circle("fill", x, y, 20)
     love.graphics.setColor(255, 0, 0)
     love.graphics.polygon("fill", x1, y1, x2, y2, x3, y3)
 end
