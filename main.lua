@@ -19,7 +19,7 @@ love.load = function ()
     objects = {}
 
     objects.ground = {}
-    objects.ground.body = love.physics.newBody(world, 100, 500)
+    objects.ground.body = love.physics.newBody(world, 400, 600)
     objects.ground.shape = love.physics.newRectangleShape(800, 100)
     objects.ground.fixture = love.physics.newFixture(objects.ground.body, objects.ground.shape)
 
