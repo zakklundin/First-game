@@ -16,6 +16,7 @@ love.load = function ()
 end
 
 love.draw = function()
+    love.graphics.setColor(1,1,1)
     love.graphics.draw(image, 300, 300)
     love.graphics.setColor(255, 255, 255)
     love.graphics.circle('fill', circle.body:getX(circle.body), circle.body:getY(circle.body), circle.shape:getRadius())
