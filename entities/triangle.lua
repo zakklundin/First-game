@@ -14,6 +14,4 @@ triangle.body.setMass(triangle.body, 100)
 triangle.fixture = love.physics.newFixture(triangle.body, triangle.shape, 1)
 triangle.fixture:setUserData(triangle)
 
-
-
 return triangle

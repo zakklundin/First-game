@@ -7,7 +7,7 @@ ground.fixture = love.physics.newFixture(ground.body, ground.shape)
 ground.fixture:setUserData(ground)
 
 ground.begin_contact = function (self)
-    love.event.quit()
+    love.event.quit('restart')
 end
 
 return ground

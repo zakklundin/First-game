@@ -19,7 +19,7 @@ love.draw = function()
     love.graphics.setColor(1,1,1)
     love.graphics.draw(image, 300, 300)
     love.graphics.setColor(255, 255, 255)
-    love.graphics.circle('fill', circle.body:getX(circle.body), circle.body:getY(circle.body), circle.shape:getRadius())
+    love.graphics.circle('fill', circle.body:getX(), circle.body:getY(), circle.shape:getRadius())
     love.graphics.print('keep trash off sreks lawn', 320, 50)
     love.graphics.setColor(255, 0, 0)
     love.graphics.polygon('fill', triangle.body:getWorldPoints(triangle.shape:getPoints()))
@@ -66,7 +66,3 @@ love.keypressed = function (pressed_key)
         circle.body:applyForce(0, -400)
     end
 end
-
---objects.begin_contact = function (self)
---    love.event.quit()
---end
