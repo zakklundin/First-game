@@ -13,12 +13,36 @@ love.load = function ()
     ground = require('entities/ground')
     triangle = require('entities/triangle')
     world = require('world')
+    state = require('state')
 end
 
 love.draw = function()
     love.graphics.setColor(1,1,1)
+    if state.game_over then
+        love.graphics.setColor(50, 0, 0)
+    end
     love.graphics.draw(image, 300, 300)
     love.graphics.setColor(255, 255, 255)
+    if state.paused then
+        love.graphics.print(
+            'PAUSED, press p to resume',
+            200,
+            100,
+            0,
+            2,
+            2
+        )
+    end
+    if state.game_over then
+        love.graphics.print(
+            'GAME OVER, press r to restart',
+            200,
+            100,
+            0,
+            2,
+            2
+        )
+    end
     love.graphics.circle('fill', circle.body:getX(), circle.body:getY(), circle.shape:getRadius())
     love.graphics.print('keep trash off sreks lawn', 320, 50)
     love.graphics.setColor(255, 0, 0)
@@ -27,14 +51,26 @@ love.draw = function()
     love.graphics.polygon('fill', ground.body:getWorldPoints(ground.shape:getPoints()))
 end
 
-local paused = false
+--local paused = false
 
 love.update = function (dt)
-    if not paused then
-        world:update(dt)
+    if state.paused or state.game_over then
+        return
     end
+
     --print(dt)
     --x = x + vx * dt
+
+    if love.keyboard.isDown('up') then
+        circle.body:applyForce(0, -100)
+    elseif love.keyboard.isDown('down') then
+        circle.body:applyForce(0, 100)
+    elseif love.keyboard.isDown('right') then
+        circle.body:applyForce(100, 0)
+    elseif love.keyboard.isDown('left') then
+        circle.body:applyForce(-100, 0)
+    end
+world:update(dt)
 end
 
 love.keypressed = function (pressed_key)
@@ -53,16 +89,16 @@ love.keypressed = function (pressed_key)
     elseif pressed_key == 'r' then
         love.event.quit('restart')
     elseif pressed_key == 'p' then
-        paused = not paused
+        state.paused = not state.paused
     end
 
-    if pressed_key == 'right' then
-        circle.body:applyForce(400, 0)
-    elseif pressed_key == 'left' then
-        circle.body:applyForce(-400, 0)
-    elseif pressed_key == 'down' then
-        circle.body:applyForce(0, 400)
-    elseif pressed_key == 'up' then
-        circle.body:applyForce(0, -400)
-    end
+    --if pressed_key == 'right' then
+    --    circle.body:applyForce(400, 0)
+    --elseif pressed_key == 'left' then
+    --    circle.body:applyForce(-400, 0)
+    --elseif pressed_key == 'down' then
+    --    circle.body:applyForce(0, 400)
+    --elseif pressed_key == 'up' then
+    --    circle.body:applyForce(0, -400)
+    --end
 end

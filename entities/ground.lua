@@ -1,4 +1,5 @@
 local world = require('world')
+local state = require('state')
 
 local ground = {}
 ground.body = love.physics.newBody(world, 400, 600)
@@ -7,7 +8,8 @@ ground.fixture = love.physics.newFixture(ground.body, ground.shape)
 ground.fixture:setUserData(ground)
 
 ground.begin_contact = function (self)
-    love.event.quit('restart')
+    state.game_over = true
+    --love.event.quit('restart')
 end
 
 return ground
