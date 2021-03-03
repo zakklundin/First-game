@@ -9,17 +9,18 @@ love.load = function ()
     love.physics.setMeter(64)
     love.graphics.setBackgroundColor(0, 0, 15) 
     love.window.setMode(800, 600)
-    circle = require('entities/circle')
+    --circle = require('entities/circle')
     ground = require('entities/ground')
     triangle = require('entities/triangle')
     world = require('world')
     state = require('state')
+    basket = require('entities/trash_basket')
 end
 
 love.draw = function()
     love.graphics.setColor(1,1,1)
     if state.game_over then
-        love.graphics.setColor(50, 0, 0)
+        love.graphics.setColor(25, 0, 0)
     end
     love.graphics.draw(image, 300, 300)
     love.graphics.setColor(255, 255, 255)
@@ -43,10 +44,13 @@ love.draw = function()
             2
         )
     end
-    love.graphics.circle('fill', circle.body:getX(), circle.body:getY(), circle.shape:getRadius())
+    --love.graphics.circle('fill', circle.body:getX(), circle.body:getY(), circle.shape:getRadius())
+    love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
     love.graphics.print('keep trash off sreks lawn', 320, 50)
     love.graphics.setColor(255, 0, 0)
-    love.graphics.polygon('fill', triangle.body:getWorldPoints(triangle.shape:getPoints()))
+    if not triangle.fixture:isDestroyed() then
+        love.graphics.polygon('fill', triangle.body:getWorldPoints(triangle.shape:getPoints()))
+    end
     love.graphics.setColor(0, 15, 0)
     love.graphics.polygon('fill', ground.body:getWorldPoints(ground.shape:getPoints()))
 end
@@ -62,13 +66,17 @@ love.update = function (dt)
     --x = x + vx * dt
 
     if love.keyboard.isDown('up') then
-        circle.body:applyForce(0, -100)
+        --circle.body:applyForce(0, -100)
+        basket.body:applyForce(0, -100)
     elseif love.keyboard.isDown('down') then
-        circle.body:applyForce(0, 100)
+        --circle.body:applyForce(0, 100)
+        basket.body:applyForce(0, 100)
     elseif love.keyboard.isDown('right') then
-        circle.body:applyForce(100, 0)
+        --circle.body:applyForce(100, 0)
+        basket.body:applyForce(100, 0)
     elseif love.keyboard.isDown('left') then
-        circle.body:applyForce(-100, 0)
+        --circle.body:applyForce(-100, 0)
+        basket.body:applyForce(-100, 0)
     end
 world:update(dt)
 end
