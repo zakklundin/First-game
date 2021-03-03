@@ -15,6 +15,7 @@ love.load = function ()
     world = require('world')
     state = require('state')
     basket = require('entities/trash_basket')
+    left_wall = require('entities/left_wall')
 end
 
 love.draw = function()
@@ -61,36 +62,28 @@ love.update = function (dt)
     if state.paused or state.game_over then
         return
     end
-
     --print(dt)
-    --x = x + vx * dt
 
-    if love.keyboard.isDown('up') then
-        --circle.body:applyForce(0, -100)
-        basket.body:applyForce(0, -100)
-    elseif love.keyboard.isDown('down') then
-        --circle.body:applyForce(0, 100)
-        basket.body:applyForce(0, 100)
-    elseif love.keyboard.isDown('right') then
-        --circle.body:applyForce(100, 0)
-        basket.body:applyForce(100, 0)
+    --if love.keyboard.isDown('up') then
+    --    basket.body:applyForce(0, -100)
+    --elseif love.keyboard.isDown('down') then
+    --    basket.body:applyForce(0, 100)
+    --elseif love.keyboard.isDown('right') then
+    --    basket.body:applyForce(100, 0)
+    --elseif love.keyboard.isDown('left') then
+    --    basket.body:applyForce(-100, 0)
+    --end
+
+    local self_x, self_y = basket.body:getPosition()
+    if love.keyboard.isDown('right') then
+        basket.body:setPosition(self_x + 10, self_y)
     elseif love.keyboard.isDown('left') then
-        --circle.body:applyForce(-100, 0)
-        basket.body:applyForce(-100, 0)
+        basket.body:setPosition(self_x - 10, self_y)
     end
 world:update(dt)
 end
 
 love.keypressed = function (pressed_key)
-    if pressed_key == 'w' then
-        y = y - 50
-    elseif pressed_key == 's' then
-        y = y + 50
-    elseif pressed_key == 'a' then
-        x = x - 50
-    elseif pressed_key == 'd' then
-        x = x + 50
-    end
 
     if pressed_key == 'escape' then
         love.event.quit()
@@ -100,13 +93,4 @@ love.keypressed = function (pressed_key)
         state.paused = not state.paused
     end
 
-    --if pressed_key == 'right' then
-    --    circle.body:applyForce(400, 0)
-    --elseif pressed_key == 'left' then
-    --    circle.body:applyForce(-400, 0)
-    --elseif pressed_key == 'down' then
-    --    circle.body:applyForce(0, 400)
-    --elseif pressed_key == 'up' then
-    --    circle.body:applyForce(0, -400)
-    --end
 end
