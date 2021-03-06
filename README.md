@@ -17,5 +17,5 @@ Add score, points for every trash collected
 Scoreboard with all time high-scores?
 Music and sound effects?
 Nicer graphics and images?
-Draw my own "Srek"?
+Draw a better "Srek"?
 Different dificulties and levels?
