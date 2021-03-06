@@ -1,4 +1,4 @@
-world = love.physics.newWorld(0, 9,82*64, true)
+world = love.physics.newWorld(0, 90,82*64, true)
 
 local begin_contact_callback = function(fixture_a, fixture_b, contact)
     local objects_a = fixture_a:getUserData()
@@ -6,13 +6,6 @@ local begin_contact_callback = function(fixture_a, fixture_b, contact)
     if objects_a.begin_contact then objects_a:begin_contact() end
     if objects_b.begin_contact then objects_b:begin_contact() end
 end
-
---local end_contact_callback = function(fixture_a, fixture_b, contact)
---end
---local pre_solve_callback = function(fixture_a, fixture_b, contact)
---end
---local post_solve_callback = function(fixture_a, fixture_b, contact)
---end
 
 world:setCallbacks(
   begin_contact_callback,

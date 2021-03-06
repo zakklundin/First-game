@@ -45,7 +45,6 @@ love.draw = function()
             2
         )
     end
-    --love.graphics.circle('fill', circle.body:getX(), circle.body:getY(), circle.shape:getRadius())
     love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
     love.graphics.print('keep trash off sreks lawn', 320, 50)
     love.graphics.setColor(255, 0, 0)
@@ -56,30 +55,18 @@ love.draw = function()
     love.graphics.polygon('fill', ground.body:getWorldPoints(ground.shape:getPoints()))
 end
 
---local paused = false
-
 love.update = function (dt)
     if state.paused or state.game_over then
         return
     end
     --print(dt)
-
-    --if love.keyboard.isDown('up') then
-    --    basket.body:applyForce(0, -100)
-    --elseif love.keyboard.isDown('down') then
-    --    basket.body:applyForce(0, 100)
-    --elseif love.keyboard.isDown('right') then
-    --    basket.body:applyForce(100, 0)
-    --elseif love.keyboard.isDown('left') then
-    --    basket.body:applyForce(-100, 0)
-    --end
-
     local self_x, self_y = basket.body:getPosition()
     if love.keyboard.isDown('right') then
         basket.body:setPosition(self_x + 10, self_y)
     elseif love.keyboard.isDown('left') then
         basket.body:setPosition(self_x - 10, self_y)
     end
+    
 world:update(dt)
 end
 
