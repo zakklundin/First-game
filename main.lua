@@ -3,7 +3,7 @@ y = 300
 vx = 150
 
 love.load = function ()
-    image = love.graphics.newImage("Shrek_(character).png")
+    image = love.graphics.newImage("Srek_bad_drawing.png")
     print("spelet har laddat klart")
     print('escape to close down, r to restart, p to pause game')
     love.physics.setMeter(64)
