@@ -12,6 +12,7 @@ right arrow: move right
 - Left and right boundaries for the "trash basket"
 - More objects falling!
 - Make it so that randomized objects fall (not just triangles)
+- Add objects that are supposed to land on the ground
 - Change speed that objects fall at and other small balancing fixes
 - Add score, points for every trash collected
 - Scoreboard with all time high-scores?
