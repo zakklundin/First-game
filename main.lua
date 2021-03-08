@@ -14,7 +14,6 @@ love.load = function ()
     world = require('world')
     state = require('state')
     basket = require('entities/trash_basket')
-    left_wall = require('entities/left_wall')
 end
 
 love.draw = function()
@@ -60,9 +59,9 @@ love.update = function (dt)
     end
     --print(dt)
     local self_x, self_y = basket.body:getPosition()
-    if love.keyboard.isDown('right') then
+    if love.keyboard.isDown('right') and self_x < 800 then
         basket.body:setPosition(self_x + 10, self_y)
-    elseif love.keyboard.isDown('left') then
+    elseif love.keyboard.isDown('left') and self_x > 0 then
         basket.body:setPosition(self_x - 10, self_y)
     end
     
