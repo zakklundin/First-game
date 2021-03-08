@@ -1,4 +1,5 @@
 world = love.physics.newWorld(0, 90,82*64, true)
+love.physics.setMeter(64)
 
 local begin_contact_callback = function(fixture_a, fixture_b, contact)
     local objects_a = fixture_a:getUserData()

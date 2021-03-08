@@ -3,10 +3,9 @@ y = 300
 vx = 150
 
 love.load = function ()
-    image = love.graphics.newImage("Srek_bad_drawing.png")
+    image = love.graphics.newImage("images/Srek_bad_drawing.png")
     print("spelet har laddat klart")
     print('escape to close down, r to restart, p to pause game')
-    love.physics.setMeter(64)
     love.graphics.setBackgroundColor(0, 0, 15) 
     love.window.setMode(800, 600)
     --circle = require('entities/circle')
