@@ -1,7 +1,7 @@
-x = 100
-y = 300
-vx = 150
-score = 0
+local x = 100
+local y = 300
+local vx = 150
+local score = 0
 
 love.load = function ()
     image = love.graphics.newImage("assets/Srek_bad_drawing.png")
@@ -78,6 +78,9 @@ love.update = function (dt)
     
     world:update(dt)
 
+    if triangle.fixture:isDestroyed() then
+        score = score + 1
+    end
 end
 
 love.keypressed = function (pressed_key)
