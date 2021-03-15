@@ -17,7 +17,7 @@ love.load = function ()
     basket = require('entities/trash_basket')
     enemies = {
         triangle(100, 0),
-        triangle(200, -50)
+        triangle(200, -100)
     }
 end
 
@@ -64,6 +64,7 @@ love.draw = function()
     --if not triangle.fixture:isDestroyed() then
     --   love.graphics.polygon('fill', triangle.body:getWorldPoints(triangle.shape:getPoints()))
     --end
+
     for _, triangle in ipairs(enemies) do
         if triangle.draw then triangle:draw() end
     end
