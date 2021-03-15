@@ -1,9 +1,10 @@
 x = 100
 y = 300
 vx = 150
+score = 0
 
 love.load = function ()
-    image = love.graphics.newImage("images/Srek_bad_drawing.png")
+    image = love.graphics.newImage("assets/Srek_bad_drawing.png")
     print("spelet har laddat klart")
     print('escape to close down, r to restart, p to pause game')
     love.graphics.setBackgroundColor(0, 0, 15) 
@@ -17,6 +18,8 @@ love.load = function ()
 end
 
 love.draw = function()
+    local font = love.graphics.newFont('assets/OpenSans-Bold.ttf', 20)
+    love.graphics.setFont(font)
     love.graphics.setColor(1,1,1)
     if state.game_over then
         love.graphics.setColor(25, 0, 0)
@@ -36,15 +39,23 @@ love.draw = function()
     if state.game_over then
         love.graphics.print(
             'GAME OVER, press r to restart',
-            200,
+            100,
             100,
             0,
             2,
             2
         )
     end
+    love.graphics.print(
+        'Score: ' .. score,
+        0,
+        0,
+        0,
+        2,
+        2
+    )
     love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
-    love.graphics.print('keep trash off sreks lawn', 320, 50)
+    love.graphics.print('keep trash off sreks lawn', 250, 50)
     love.graphics.setColor(255, 0, 0)
     if not triangle.fixture:isDestroyed() then
         love.graphics.polygon('fill', triangle.body:getWorldPoints(triangle.shape:getPoints()))
@@ -65,7 +76,8 @@ love.update = function (dt)
         basket.body:setPosition(self_x - 10, self_y)
     end
     
-world:update(dt)
+    world:update(dt)
+
 end
 
 love.keypressed = function (pressed_key)
