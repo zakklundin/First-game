@@ -15,6 +15,10 @@ love.load = function ()
     world = require('world')
     state = require('state')
     basket = require('entities/trash_basket')
+    enemies = {
+        triangle(100, 0),
+        triangle(200, -50)
+    }
 end
 
 love.draw = function()
@@ -57,8 +61,11 @@ love.draw = function()
     love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
     love.graphics.print('keep trash off sreks lawn', 250, 50)
     love.graphics.setColor(255, 0, 0)
-    if not triangle.fixture:isDestroyed() then
-        love.graphics.polygon('fill', triangle.body:getWorldPoints(triangle.shape:getPoints()))
+    --if not triangle.fixture:isDestroyed() then
+    --   love.graphics.polygon('fill', triangle.body:getWorldPoints(triangle.shape:getPoints()))
+    --end
+    for _, triangle in ipairs(enemies) do
+        if triangle.draw then triangle:draw() end
     end
     love.graphics.setColor(0, 15, 0)
     love.graphics.polygon('fill', ground.body:getWorldPoints(ground.shape:getPoints()))
@@ -78,9 +85,9 @@ love.update = function (dt)
     
     world:update(dt)
 
-    if triangle.fixture:isDestroyed() then
-        score = score + 1
-    end
+    --if triangle.fixture:isDestroyed() then
+    --    score = score + 1
+    --end
 end
 
 love.keypressed = function (pressed_key)
