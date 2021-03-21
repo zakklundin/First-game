@@ -1,7 +1,6 @@
 local x = 100
 local y = 300
 local vx = 150
---local score = 0
 
 love.load = function ()
     image = love.graphics.newImage("assets/Srek_bad_drawing.png")
@@ -61,10 +60,6 @@ love.draw = function()
     love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
     love.graphics.print('keep trash off sreks lawn', 250, 50)
     love.graphics.setColor(255, 0, 0)
-    --if not triangle.fixture:isDestroyed() then
-    --   love.graphics.polygon('fill', triangle.body:getWorldPoints(triangle.shape:getPoints()))
-    --end
-
     for _, triangle in ipairs(enemies) do
         if triangle.draw then triangle:draw() end
     end
@@ -86,9 +81,6 @@ love.update = function (dt)
     
     world:update(dt)
 
-    --if triangle.fixture:isDestroyed() then
-    --    score = score + 1
-    --end
 end
 
 love.keypressed = function (pressed_key)

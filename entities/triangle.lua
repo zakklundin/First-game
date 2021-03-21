@@ -23,7 +23,10 @@ return function (x, y)
 
     triangle.draw = function (self)
         love.graphics.setColor(255, 0, 0)
-        love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
+        if  not triangle.fixture:isDestroyed() then
+            love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
+
+        end
     end
 
     return triangle
