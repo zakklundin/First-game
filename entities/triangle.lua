@@ -1,5 +1,6 @@
 local world = require('world')
 
+score = 0
     x1 = 200
     y1 = -100
     x2 = 300
@@ -17,6 +18,7 @@ return function (x, y)
     
     triangle.begin_contact = function (self)
         triangle.fixture:destroy()
+        score = score + 1
     end
 
     triangle.draw = function (self)

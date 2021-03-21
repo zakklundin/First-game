@@ -1,7 +1,7 @@
 local x = 100
 local y = 300
 local vx = 150
-local score = 0
+--local score = 0
 
 love.load = function ()
     image = love.graphics.newImage("assets/Srek_bad_drawing.png")
