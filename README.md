@@ -9,7 +9,6 @@ left arrow: move left
 right arrow: move right
 
 ## Todo
-- Left and right boundaries for the "trash basket"
 - More objects falling!
 - Make it so that randomized objects fall (not just triangles)
 - Add objects that are supposed to land on the ground
@@ -20,3 +19,4 @@ right arrow: move right
 - Nicer graphics and images?
 - Draw a better "Srek"?
 - Different dificulties and levels?
+- Main- and pause menu with settings and options
