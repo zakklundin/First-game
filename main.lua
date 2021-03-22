@@ -18,9 +18,11 @@ love.load = function ()
         triangle(100, 0),
         triangle(200, -100)
     }
+    math.randomseed(os.time())
     enemySpawner = function ()
-        table.insert(enemies, triangle(math.random(700), -100))
+        table.insert(enemies, triangle(math.random(1, 700), -100))
     end
+    enemySpawner()
 end
 
 love.draw = function()
