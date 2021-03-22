@@ -16,12 +16,25 @@ love.load = function ()
     basket = require('entities/trash_basket')
     enemies = {
         triangle(100, 0),
-        triangle(200, -100)
     }
+    local y = -200
     math.randomseed(os.time())
     enemySpawner = function ()
-        table.insert(enemies, triangle(math.random(1, 700), -100))
+        table.insert(enemies, triangle(math.random(0, 600), y))
+        y = y -200
     end
+    enemySpawner()
+    enemySpawner()
+    enemySpawner()
+    enemySpawner()
+    enemySpawner()
+    enemySpawner()
+    enemySpawner()
+    enemySpawner()
+    enemySpawner()
+    enemySpawner()
+    enemySpawner()
+    enemySpawner()
     enemySpawner()
 end
 
@@ -79,9 +92,9 @@ love.update = function (dt)
     --print(dt)
     local self_x, self_y = basket.body:getPosition()
     if love.keyboard.isDown('right') and self_x < 800 then
-        basket.body:setPosition(self_x + 10, self_y)
+        basket.body:setPosition(self_x + 20, self_y)
     elseif love.keyboard.isDown('left') and self_x > 0 then
-        basket.body:setPosition(self_x - 10, self_y)
+        basket.body:setPosition(self_x - 20, self_y)
     end
     
     world:update(dt)
