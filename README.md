@@ -20,3 +20,4 @@ right arrow: move right
 - Draw a better "Srek"?
 - Different dificulties and levels?
 - Main- and pause menu with settings and options
+- FPS counter

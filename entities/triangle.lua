@@ -8,7 +8,7 @@ score = 0
     x3 = 250
     y3 = 0
 
-return function (x, y)
+return function (x, y) -- returns a function so that i can spawn a triangle at (x, y) in main
     local triangle = {}
     triangle.body = love.physics.newBody(world, x, y, 'dynamic')
     triangle.shape = love.physics.newPolygonShape(x1, y1, x2, y2, x3, y3)
