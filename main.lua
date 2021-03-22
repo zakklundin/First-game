@@ -24,18 +24,8 @@ love.load = function ()
         y = y -200
     end
     enemySpawner()
-    enemySpawner()
-    enemySpawner()
-    enemySpawner()
-    enemySpawner()
-    enemySpawner()
-    enemySpawner()
-    enemySpawner()
-    enemySpawner()
-    enemySpawner()
-    enemySpawner()
-    enemySpawner()
-    enemySpawner()
+    
+    cooldown = 0
 end
 
 love.draw = function()
@@ -99,6 +89,11 @@ love.update = function (dt)
     
     world:update(dt)
 
+    cooldown = cooldown - dt
+    while cooldown <= 0 do
+        cooldown = cooldown + 1
+        enemySpawner()
+    end
 end
 
 love.keypressed = function (pressed_key)
