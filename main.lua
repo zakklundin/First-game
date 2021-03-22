@@ -17,13 +17,10 @@ love.load = function ()
     enemies = {
         triangle(100, 0),
     }
-    local y = -200
     math.randomseed(os.time())
     enemySpawner = function ()
-        table.insert(enemies, triangle(math.random(0, 600), y))
-        y = y -200
+        table.insert(enemies, triangle(math.random(0, 650), -100))
     end
-    enemySpawner()
     
     cooldown = 0
 end
