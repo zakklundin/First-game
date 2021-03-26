@@ -9,7 +9,6 @@ ground.fixture:setUserData(ground)
 
 ground.begin_contact = function (self)
     state.game_over = true
-    score = score - 1 --triangle contact adds a score even when it hits the ground
 end
 
 return ground

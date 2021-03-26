@@ -8,7 +8,6 @@ love.load = function ()
     print('escape to close down, r to restart, p to pause game')
     love.graphics.setBackgroundColor(0, 0, 15) 
     love.window.setMode(800, 600)
-    --circle = require('entities/circle')
     ground = require('entities/ground')
     triangle = require('entities/triangle')
     world = require('world')
@@ -19,9 +18,8 @@ love.load = function ()
     }
     math.randomseed(os.time())
     enemySpawner = function ()
-        table.insert(enemies, triangle(math.random(0, 650), -100))
+        table.insert(enemies, triangle(math.random(-100, 650), -100))
     end
-    
     cooldown = 0
 end
 
@@ -36,34 +34,29 @@ love.draw = function()
     love.graphics.setColor(255, 255, 255)
     if state.paused then
         love.graphics.print(
-            'PAUSED, press p to resume',
-            200,
-            100,
-            0,
-            2,
-            2
+            'PAUSED, press p to resume', 200, 100, 0, 2, 2
+        )
+    end
+    if state.main_menu then
+        love.graphics.print(
+            'SREKS LAWN', 200, 0, 0, 2, 2
+        )
+        love.graphics.print(
+            'Press any key to start', 200, 100, 0, 1, 1
         )
     end
     if state.game_over then
         love.graphics.print(
-            'GAME OVER, press r to restart',
-            100,
-            100,
-            0,
-            2,
-            2
+            'GAME OVER, press r to restart', 100, 100, 0, 2, 2
         )
     end
-    love.graphics.print(
-        'Score: ' .. score,
-        0,
-        0,
-        0,
-        2,
-        2
-    )
-    love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
-    love.graphics.print('keep trash off sreks lawn', 250, 50)
+    if not state.main_menu then
+        love.graphics.print(
+            'Score: ' .. score, 0, 0, 0, 1.5, 1.5
+        )
+        love.graphics.print('Keep trash off of Sreks lawn!', 250, 50)    
+        love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
+    end
     love.graphics.setColor(255, 0, 0)
     for _, triangle in ipairs(enemies) do
         if triangle.draw then triangle:draw() end
@@ -73,8 +66,8 @@ love.draw = function()
 end
 
 love.update = function (dt)
-    if state.paused or state.game_over then
-        return
+    if state.paused or state.game_over or state.main_menu then
+        return --ends the function if the states are true, which stops game time
     end
     --print(dt)
     local self_x, self_y = basket.body:getPosition()
@@ -101,6 +94,8 @@ love.keypressed = function (pressed_key)
         love.event.quit('restart')
     elseif pressed_key == 'p' then
         state.paused = not state.paused
+    elseif pressed_key and state.main_menu then --alla tangenter ska starta spelet, men ska bara gå när det är i main menu
+        state.main_menu = not state.main_menu
     end
 
 end
