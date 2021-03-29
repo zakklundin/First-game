@@ -8,6 +8,9 @@ escape: force-quit
 left arrow: move left
 right arrow: move right
 
+## Credits
+Music: Royalty Free Music from Bensound "EPIC"
+
 ## Todo
 - More objects falling!
 - Make it so that randomized objects fall (not just triangles)

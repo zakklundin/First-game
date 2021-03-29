@@ -1,7 +1,3 @@
-local x = 100
-local y = 300
-local vx = 150
-
 love.load = function ()
     image = love.graphics.newImage("assets/Srek_bad_drawing.png")
     print("spelet har laddat klart")
@@ -14,13 +10,36 @@ love.load = function ()
     state = require('state')
     basket = require('entities/trash_basket')
     enemies = {
-        triangle(100, 0),
+        --triangle(100, 0) is how you add a triangle
     }
     math.randomseed(os.time())
     enemySpawner = function ()
         table.insert(enemies, triangle(math.random(-100, 650), -100))
     end
     cooldown = 0
+    difficulty = 2
+    vx = 1.2
+    if difficulty == 1 then
+        vx = 1
+    elseif difficulty == 3 then
+        vx = 1.4
+    else 
+        vx = 1.2
+    end
+
+    isMusicPlaying = false
+    musicTrack = nil
+    if isMusicPlaying == false then
+        if musicTrack == nil then
+            musicTrack = love.audio.newSource("assets/bensound-epic.mp3", "stream")
+            musicTrack:setVolume(0.5)
+        end
+        if state.main_menu then
+            musicTrack:pause()
+        end
+        musicTrack:play()
+        isMusicPlaying = true
+    end
 end
 
 love.draw = function()
@@ -33,27 +52,20 @@ love.draw = function()
     love.graphics.draw(image, 300, 300)
     love.graphics.setColor(255, 255, 255)
     if state.paused then
-        love.graphics.print(
-            'PAUSED, press p to resume', 200, 100, 0, 2, 2
-        )
+        love.graphics.print('PAUSED, press p to resume', 200, 100, 0, 2, 2)
     end
     if state.main_menu then
-        love.graphics.print(
-            'SREKS LAWN', 200, 0, 0, 2, 2
-        )
-        love.graphics.print(
-            'Press any key to start', 200, 100, 0, 1, 1
-        )
+        love.graphics.print('SREKS LAWN', (love.graphics.getWidth()/2 - 100), 0, 0, 2, 2)
+        love.graphics.print('Press any key to start', 200, 100, 0, 1, 1)
+        if difficulty == 2 then
+            love.graphics.print('Difficulty is set to medium', (love.graphics.getWidth()/2 - font:getWidth("Difficulty is set to medium")/2), 250, 0, 1, 1)
+        end
     end
     if state.game_over then
-        love.graphics.print(
-            'GAME OVER, press r to restart', 100, 100, 0, 2, 2
-        )
+        love.graphics.print('GAME OVER, press r to restart', 100, 100, 0, 2, 2)
     end
     if not state.main_menu then
-        love.graphics.print(
-            'Score: ' .. score, 0, 0, 0, 1.5, 1.5
-        )
+        love.graphics.print('Score: ' .. score, 0, 0, 0, 1.5, 1.5)
         love.graphics.print('Keep trash off of Sreks lawn!', 250, 50)    
         love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
     end
@@ -67,16 +79,17 @@ end
 
 love.update = function (dt)
     if state.paused or state.game_over or state.main_menu then
-        return --ends the function if the states are true, which stops game time
+        return --ends the function if the states are true, which stops world:update function
     end
     --print(dt)
     local self_x, self_y = basket.body:getPosition()
     if love.keyboard.isDown('right') and self_x < 800 then
-        basket.body:setPosition(self_x + 20, self_y)
+        basket.body:setPosition(self_x + 15, self_y)
     elseif love.keyboard.isDown('left') and self_x > 0 then
-        basket.body:setPosition(self_x - 20, self_y)
+        basket.body:setPosition(self_x - 15, self_y)
     end
     
+    dt = dt * vx
     world:update(dt)
 
     cooldown = cooldown - dt
@@ -87,15 +100,13 @@ love.update = function (dt)
 end
 
 love.keypressed = function (pressed_key)
-
     if pressed_key == 'escape' then
         love.event.quit()
     elseif pressed_key == 'r' then
         love.event.quit('restart')
-    elseif pressed_key == 'p' then
+    elseif pressed_key == 'p' and state.main_menu == false and state.game_over == false then
         state.paused = not state.paused
     elseif pressed_key and state.main_menu then --alla tangenter ska starta spelet, men ska bara gå när det är i main menu
         state.main_menu = not state.main_menu
     end
-
 end
