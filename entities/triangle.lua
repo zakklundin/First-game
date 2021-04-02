@@ -1,10 +1,10 @@
 local world = require('world')
-    x1 = 200
-    y1 = -100
-    x2 = 300
-    y2 = -100
-    x3 = 250
-    y3 = 0
+local x1 = 200
+local y1 = -100
+local x2 = 300
+local y2 = -100
+local x3 = 250
+local y3 = 0
 
 return function (x, y) -- returns a function so that i can spawn a triangle at (x, y) in main
     local triangle = {}
@@ -22,7 +22,6 @@ return function (x, y) -- returns a function so that i can spawn a triangle at (
         love.graphics.setColor(255, 0, 0)
         if  not triangle.fixture:isDestroyed() then
             love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
-
         end
     end
 

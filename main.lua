@@ -9,8 +9,19 @@ love.load = function ()
     world = require('world')
     state = require('state')
     basket = require('entities/trash_basket')
+    button = require('entities/button')
+    buttons = {}
+    if state.main_menu then
+        table.insert(buttons, button(300, 100, "Start Game"))
+        table.insert(buttons, button(300, 250, "Options"))
+        table.insert(buttons, button(300, 400, "Exit Game"))
+    end
+    if state.options then
+        table.insert(buttons, button(300))
+    end
+
     enemies = {
-        --triangle(100, 0) is how you add a triangle
+        --'triangle(x, y)' is how you add a triangle
     }
     math.randomseed(os.time())
     enemySpawner = function ()
@@ -56,15 +67,18 @@ love.draw = function()
     end
     if state.main_menu then
         love.graphics.print('SREKS LAWN', (love.graphics.getWidth()/2 - 100), 0, 0, 2, 2)
-        love.graphics.print('Press any key to start', 200, 100, 0, 1, 1)
+        --love.graphics.print('Press any key to start', 200, 100, 0, 1, 1)
+        for _, button in ipairs(buttons) do
+            if button.draw then button:draw() end
+        end
         if difficulty == 2 then
-            love.graphics.print('Difficulty is set to medium', (love.graphics.getWidth()/2 - font:getWidth("Difficulty is set to medium")/2), 250, 0, 1, 1)
+            love.graphics.print('Difficulty is set to medium', (love.graphics.getWidth()/2 - font:getWidth("Difficulty is set to medium")/2), 500, 0, 1, 1)
         end
     end
     if state.game_over then
         love.graphics.print('GAME OVER, press r to restart', 100, 100, 0, 2, 2)
     end
-    if not state.main_menu then
+    if not (state.main_menu or state.options) then
         love.graphics.print('Score: ' .. score, 0, 0, 0, 1.5, 1.5)
         love.graphics.print('Keep trash off of Sreks lawn!', 250, 50)    
         love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
@@ -78,7 +92,7 @@ love.draw = function()
 end
 
 love.update = function (dt)
-    if state.paused or state.game_over or state.main_menu then
+    if state.paused or state.game_over or state.main_menu or state.options then
         return --ends the function if the states are true, which stops world:update function
     end
     --print(dt)
@@ -108,5 +122,20 @@ love.keypressed = function (pressed_key)
         state.paused = not state.paused
     elseif pressed_key and state.main_menu then --alla tangenter ska starta spelet, men ska bara gå när det är i main menu
         state.main_menu = not state.main_menu
+    end
+end
+
+love.mousepressed = function (mouseX, mouseY, mouseButton)
+    if mouseButton == 1 and state.main_menu then --vänsterklick
+        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 150 and mouseY < (150 + 100) then --checks if mouse cursor is within button
+            state.main_menu = not state.main_menu
+        end
+        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 250 and mouseY < (250 + 100) then
+            state.options = not state.options 
+            state.main_menu = not state.main_menu
+        end
+        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 400 and mouseY < (400 + 100) then
+            love.event.quit()
+        end
     end
 end
