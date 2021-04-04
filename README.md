@@ -1,10 +1,12 @@
 ## Srek's lawn
 You need to keep Srek's lawn clean from falling objects! If you fail he gets mad!
 
+## Instructions
+Collect obstacles that fall from the sky. Don't spam menu buttons because it could cause bugs in the menu system.
+
 ## Controls
 r: restart
-p: pause
-escape: force-quit
+Escape: pause
 left arrow: move left
 right arrow: move right
 
