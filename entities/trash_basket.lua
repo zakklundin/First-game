@@ -1,5 +1,5 @@
 local world = require('world')
-score = 0
+score = require('entities/score')
 
 local basket = {}
 basket.body  = love.physics.newBody(world, 250, 500, 'static')
