@@ -10,6 +10,7 @@ basket.fixture:setUserData(basket)
 
 basket.begin_contact = function ()
     score = score + 1
+    velocityChange = velocityChange + 1
 end
 
 return basket

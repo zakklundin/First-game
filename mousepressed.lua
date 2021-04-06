@@ -26,11 +26,11 @@ love.mousepressed = function (mouseX, mouseY, mouseButton)
             isMuted = not isMuted
         end
         if mouseX > 75 and mouseX < (75 + 200) and mouseY > 250 and mouseY < (250 + 100) then
-            vx = 1 
+            vx = 1.0
             difficulty = "Easy"
         end
         if mouseX > 300 and mouseX < (300 + 200) and mouseY > 250 and mouseY < (250 + 100) then
-           vx = 1.2
+           vx = 1.25
            difficulty = "Medium"
         end
         if mouseX > 525 and mouseX < (525 + 200) and mouseY > 250 and mouseY < (250 + 100) then

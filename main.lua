@@ -1,7 +1,7 @@
 love.load = function ()
     image = love.graphics.newImage("assets/Srek_bad_drawing.png")
     print("spelet har laddat klart")
-    print('escape to close down, r to restart, p to pause game')
+    print('escape to pause, r to restart')
     love.graphics.setBackgroundColor(0, 0, 15)
     love.window.setMode(800, 600)
     ground = require('entities/ground')
@@ -20,15 +20,16 @@ love.load = function ()
     enemies = {} --'triangle(x, y)' is how you add a triangle
     math.randomseed(os.time())
     enemySpawner = function ()
-        table.insert(enemies, triangle(math.random(-100, 600), -100))
+        table.insert(enemies, triangle(love.math.random(-100, 600), -100))
     end
-    cooldown = 0
-    vx = 1.2
+    spawnCooldown = 0
+    vx = 1.25
     difficulty = "Medium"
     mousepressed = require('mousepressed')
     isMuted = false
     musicTrack = love.audio.newSource("assets/bensound-epic.mp3", "stream")
     musicTrack:setVolume(0.5)
+    velocityChange = 0
 end
 
 love.draw = function()
@@ -63,6 +64,7 @@ love.draw = function()
     end
     if not (state.main_menu or state.options or state.game_over) then
         love.graphics.print('Score: ' .. score, 0, 0, 0, 1.5, 1.5)
+        love.graphics.print(vx, 0, 25, 0, 1, 1) --REMOVE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         love.graphics.print('Keep trash off of Sreks lawn!', 250, 50)    
         love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
         love.graphics.setColor(255, 0, 0)
@@ -93,10 +95,14 @@ love.update = function (dt)
     end
     dt = dt * vx
     world:update(dt)
-    cooldown = cooldown - dt
-    while cooldown <= 0 do
-        cooldown = cooldown + 1
+    spawnCooldown = spawnCooldown - dt
+    while spawnCooldown <= 0 do
+        spawnCooldown = spawnCooldown + 2
         enemySpawner()
+    end
+    while velocityChange >= 20 do --increases game by 20% speed every 20 points to increase difficulty over time
+        velocityChange = 0
+        vx = vx + 0.2*vx
     end
 end
 
