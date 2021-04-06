@@ -20,7 +20,7 @@ love.load = function ()
     enemies = {} --'triangle(x, y)' is how you add a triangle
     math.randomseed(os.time())
     enemySpawner = function ()
-        table.insert(enemies, triangle(love.math.random(-100, 600), -100))
+        table.insert(enemies, triangle(love.math.random(-50, 550), -100))
     end
     spawnCooldown = 0
     vx = 1.25
@@ -100,9 +100,9 @@ love.update = function (dt)
         spawnCooldown = spawnCooldown + 2
         enemySpawner()
     end
-    while velocityChange >= 20 do --increases game by 20% speed every 20 points to increase difficulty over time
+    while velocityChange >= 5 do --increases game by 5% speed every 5 points to increase difficulty over time
         velocityChange = 0
-        vx = vx + 0.2*vx
+        vx = vx + 0.05*vx
     end
 end
 
