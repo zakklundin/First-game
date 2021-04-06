@@ -5,6 +5,9 @@ love.mousepressed = function (mouseX, mouseY, mouseButton)
         if mouseX > 300 and mouseX < (300 + 200) and mouseY > 100 and mouseY < (100 + 100) then --checks if mouse cursor is within button limits
             state.main_menu = not state.main_menu
             buttons = {}
+            if not isMuted then
+                musicTrack:play()
+            end
         end
         if mouseX > 300 and mouseX < (300 + 200) and mouseY > 250 and mouseY < (250 + 100) then
             state.main_menu = not state.main_menu
@@ -23,13 +26,16 @@ love.mousepressed = function (mouseX, mouseY, mouseButton)
             isMuted = not isMuted
         end
         if mouseX > 75 and mouseX < (75 + 200) and mouseY > 250 and mouseY < (250 + 100) then
-            vx = 1
+            vx = 1 
+            difficulty = "Easy"
         end
         if mouseX > 300 and mouseX < (300 + 200) and mouseY > 250 and mouseY < (250 + 100) then
            vx = 1.2
+           difficulty = "Medium"
         end
         if mouseX > 525 and mouseX < (525 + 200) and mouseY > 250 and mouseY < (250 + 100) then
            vx = 1.5
+           difficulty = "Hard"
         end
         if mouseX > 300 and mouseX < (300 + 200) and mouseY > 400 and mouseY < (400 + 100) then
             state.options = not state.options

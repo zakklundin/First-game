@@ -24,21 +24,11 @@ love.load = function ()
     end
     cooldown = 0
     vx = 1.2
+    difficulty = "Medium"
     mousepressed = require('mousepressed')
     isMuted = false
-    isMusicPlaying = false
-    musicTrack = nil
-    if isMusicPlaying == false and isMuted == false then
-        if musicTrack == nil then
-            musicTrack = love.audio.newSource("assets/bensound-epic.mp3", "stream")
-            musicTrack:setVolume(0.5)
-        end
-        if state.main_menu then
-            musicTrack:pause()
-        end
-        musicTrack:play()
-        isMusicPlaying = true
-    end
+    musicTrack = love.audio.newSource("assets/bensound-epic.mp3", "stream")
+    musicTrack:setVolume(0.5)
 end
 
 love.draw = function()
@@ -66,7 +56,10 @@ love.draw = function()
         love.graphics.print('SREKS LAWN', (love.graphics.getWidth()/2 - 120), 0, 0, 2, 2)
     end
     if state.main_menu or state.options then
-        love.graphics.print('Difficulty is set to ' .. vx, 225, 500, 0, 1, 1)
+        love.graphics.print('Difficulty is set to ' .. difficulty, 225, 500, 0, 1, 1)
+        if isMuted then
+            love.graphics.print('Game is muted', 225, 520, 0, 1, 1)
+        end
     end
     if not (state.main_menu or state.options or state.game_over) then
         love.graphics.print('Score: ' .. score, 0, 0, 0, 1.5, 1.5)
