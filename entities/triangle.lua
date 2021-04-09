@@ -15,6 +15,10 @@ return function (x, y) -- returns a function so that i can spawn a redTriangle a
     redTriangle.fixture = love.physics.newFixture(redTriangle.body, redTriangle.shape, 1)
     redTriangle.fixture:setUserData(redTriangle)
 
+    redTriangle.beginContact = function (self)
+        self.fixture:destroy()
+    end
+
     redTriangle.draw = function (self)
         love.graphics.setColor(255, 0, 0)
         if not redTriangle.fixture:isDestroyed() then

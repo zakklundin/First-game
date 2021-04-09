@@ -25,7 +25,7 @@ love.load = function ()
     enemySpawner = function ()
         table.insert(obstacles, triangle(love.math.random(-50, 550), -100))
     end
-    circleSpawner = function ()
+    appleSpawner = function ()
         obstacles = {} --empties the obstacles table, no triangles fall at the same time as apples
         table.insert(apples, apple(love.math.random(-50, 550), -100))
     end
@@ -88,8 +88,7 @@ love.draw = function()
         for _, button in ipairs(buttons) do
             if button.draw then button:draw() end
         end
-    end
-    
+    end 
 end
 
 love.update = function (dt)
@@ -114,7 +113,7 @@ love.update = function (dt)
     if difficulty == "Medium" or difficulty == "Hard" then --No apples on easy mode!
         while circleCooldown <= 0 do
             circleCooldown = circleCooldown + 10
-            circleSpawner()
+            appleSpawner()
         end
     end
     while velocityChange >= 5 do --increases game by 5% speed every 5 points to increase difficulty over time
@@ -129,7 +128,7 @@ love.update = function (dt)
         end
         if checkCollision(triangle.fixture, basket.fixture) then
             table.remove(obstacles, i) --removes colliding triangle from obstacles table
-            triangle.fixture:destroy() --destroys the colliding triangles fixture
+            --triangle.fixture:destroy() --destroys the colliding triangles fixture
             score = score + 1
             velocityChange = velocityChange + 1
         end
@@ -137,13 +136,13 @@ love.update = function (dt)
     for i, apple in ipairs(apples) do
         if checkCollision(apple.fixture, ground.fixture) then
             table.remove(apples, i)
-            apple.fixture:destroy()
+            --apple.fixture:destroy()
             score = score + 1
             velocityChange = velocityChange + 1
         end
         if checkCollision(apple.fixture, basket.fixture) then --lose a point when you pick apple up
             table.remove(apples, i)
-            apple.fixture:destroy()
+            --apple.fixture:destroy()
             score = score - 1
         end
     end
