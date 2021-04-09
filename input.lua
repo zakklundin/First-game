@@ -58,4 +58,24 @@ love.mousepressed = function (mouseX, mouseY, mouseButton)
             love.event.quit()
         end
     end
+    if mouseButton == 1 and state.game_over then
+        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 200 and mouseY < (200 + 100) then
+            love.event.quit('restart')
+        end
+        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 350 and mouseY < (350 + 100) then
+            love.event.quit()
+        end
+    end
+end
+
+love.keypressed = function (pressed_key)
+    if pressed_key == 'escape' and not (state.main_menu or state.options or state.game_over) then
+        state.paused = not state.paused
+        buttons = {} --makes sure no other buttons show when pausing game
+        table.insert(buttons, button(300, 100, 'Resume'))
+        table.insert(buttons, button(300, 250, 'Main Menu'))
+        table.insert(buttons, button(300, 400, 'Exit Game'))
+    elseif pressed_key == 'r' then
+        love.event.quit('restart')
+    end
 end

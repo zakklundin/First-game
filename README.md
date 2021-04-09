@@ -2,7 +2,7 @@
 You need to keep Srek's lawn clean from falling objects! If you fail he gets mad!
 
 ## Instructions
-Collect obstacles that fall from the sky. Don't spam menu buttons because it could cause bugs in the menu system.
+Collect red triangles that fall from the sky. Sometimes, on medium and hard difficulties, an apple falls from the sky, and Srek wants apples to land on his lawn. Collecting apples will result in losing a point, while letting them land on ground adds a point.
 
 ## Controls
 r: restart
@@ -14,15 +14,8 @@ right arrow: move right
 Music: Royalty Free Music from Bensound "EPIC"
 
 ## Todo
-- More objects falling!
-- Make it so that randomized objects fall (not just triangles)
-- Add objects that are supposed to land on the ground
-- Change speed that objects fall at and other small balancing fixes
-- Add score, points for every trash collected
 - Scoreboard with all time high-scores?
-- Music and sound effects?
+- Sound effects?
 - Nicer graphics and images?
 - Draw a better "Srek"?
-- Different dificulties and levels?
-- Main- and pause menu with settings and options
 - FPS counter

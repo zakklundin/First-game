@@ -4,8 +4,10 @@ love.load = function ()
     print('escape to pause, r to restart')
     love.graphics.setBackgroundColor(0, 0, 15)
     love.window.setMode(800, 600)
+    input = require('input')
     ground = require('entities/ground')
     triangle = require('entities/triangle')
+    apple = require('entities/greenApple')
     world = require('world')
     state = require('state')
     basket = require('entities/trash_basket')
@@ -17,18 +19,23 @@ love.load = function ()
         table.insert(buttons, button(300, 250, "Options"))
         table.insert(buttons, button(300, 400, "Exit Game"))
     end
-    enemies = {} --'triangle(x, y)' is how you add a triangle
+    obstacles = {} --'triangle(x, y)' is how you add a triangle
+    apples = {}
     math.randomseed(os.time())
     enemySpawner = function ()
-        table.insert(enemies, triangle(love.math.random(-50, 550), -100))
+        table.insert(obstacles, triangle(love.math.random(-50, 550), -100))
+    end
+    circleSpawner = function ()
+        obstacles = {} --empties the obstacles table, no triangles fall at the same time as apples
+        table.insert(apples, apple(love.math.random(-50, 550), -100))
     end
     spawnCooldown = 0
+    circleCooldown = 10
     vx = 1.25
     difficulty = "Medium"
-    mousepressed = require('mousepressed')
     isMuted = false
     musicTrack = love.audio.newSource("assets/bensound-epic.mp3", "stream")
-    musicTrack:setVolume(0.5)
+    musicTrack:setVolume(0.4)
     velocityChange = 0
 end
 
@@ -68,8 +75,11 @@ love.draw = function()
         love.graphics.print('Keep trash off of Sreks lawn!', 250, 50)    
         love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
         love.graphics.setColor(255, 0, 0)
-        for _, triangle in ipairs(enemies) do
+        for _, triangle in ipairs(obstacles) do
             if triangle.draw then triangle:draw() end
+        end
+        for _, apple in ipairs(apples) do
+            if apple.draw then apple:draw() end
         end
     end
     love.graphics.setColor(0, 15, 0)
@@ -96,24 +106,46 @@ love.update = function (dt)
     dt = dt * vx
     world:update(dt)
     spawnCooldown = spawnCooldown - dt
+    circleCooldown = circleCooldown - dt
     while spawnCooldown <= 0 do
         spawnCooldown = spawnCooldown + 2
         enemySpawner()
+    end
+    if difficulty == "Medium" or difficulty == "Hard" then --No apples on easy mode!
+        while circleCooldown <= 0 do
+            circleCooldown = circleCooldown + 10
+            circleSpawner()
+        end
     end
     while velocityChange >= 5 do --increases game by 5% speed every 5 points to increase difficulty over time
         velocityChange = 0
         vx = vx + 0.05*vx
     end
-end
-
-love.keypressed = function (pressed_key)
-    if pressed_key == 'escape' and not (state.main_menu or state.options or state.game_over) then
-        state.paused = not state.paused
-        buttons = {} --makes sure no other buttons show when pausing game
-        table.insert(buttons, button(300, 100, 'Resume'))
-        table.insert(buttons, button(300, 250, 'Main Menu'))
-        table.insert(buttons, button(300, 400, 'Exit Game'))
-    elseif pressed_key == 'r' then
-        love.event.quit('restart')
+    for i, triangle in ipairs(obstacles) do
+        if checkCollision(triangle.fixture, ground.fixture) then
+            state.game_over = true
+            table.insert(buttons, button(300, 200, 'Main Menu'))
+            table.insert(buttons, button(300, 350, 'Exit Game'))
+        end
+        if checkCollision(triangle.fixture, basket.fixture) then
+            table.remove(obstacles, i) --removes colliding triangle from obstacles table
+            triangle.fixture:destroy() --destroys the colliding triangles fixture
+            score = score + 1
+            velocityChange = velocityChange + 1
+        end
     end
+    for i, apple in ipairs(apples) do
+        if checkCollision(apple.fixture, ground.fixture) then
+            table.remove(apples, i)
+            apple.fixture:destroy()
+            score = score + 1
+            velocityChange = velocityChange + 1
+        end
+        if checkCollision(apple.fixture, basket.fixture) then --lose a point when you pick apple up
+            table.remove(apples, i)
+            apple.fixture:destroy()
+            score = score - 1
+        end
+    end
+    
 end

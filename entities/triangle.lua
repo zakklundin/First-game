@@ -1,4 +1,5 @@
 local world = require('world')
+
 local x1 = 200
 local y1 = -100
 local x2 = 300
@@ -6,24 +7,20 @@ local y2 = -100
 local x3 = 250
 local y3 = 0
 
-return function (x, y) -- returns a function so that i can spawn a triangle at (x, y) in main
-    local triangle = {}
-    triangle.body = love.physics.newBody(world, x, y, 'dynamic')
-    triangle.shape = love.physics.newPolygonShape(x1, y1, x2, y2, x3, y3)
-    triangle.body:setLinearVelocity(0, 250 * vx)
-    --triangle.body:setMass(5)
-    triangle.fixture = love.physics.newFixture(triangle.body, triangle.shape, 1)
-    triangle.fixture:setUserData(triangle)
-    triangle.begin_contact = function (self)
-        triangle.fixture:destroy()
-    end
+return function (x, y) -- returns a function so that i can spawn a redTriangle at (x, y) in main
+    local redTriangle = {}
+    redTriangle.body = love.physics.newBody(world, x, y, 'dynamic')
+    redTriangle.shape = love.physics.newPolygonShape(x1, y1, x2, y2, x3, y3)
+    redTriangle.body:setLinearVelocity(0, 250 * vx) --speed is determined by 'vx' variable
+    redTriangle.fixture = love.physics.newFixture(redTriangle.body, redTriangle.shape, 1)
+    redTriangle.fixture:setUserData(redTriangle)
 
-    triangle.draw = function (self)
+    redTriangle.draw = function (self)
         love.graphics.setColor(255, 0, 0)
-        if  not triangle.fixture:isDestroyed() then
+        if not redTriangle.fixture:isDestroyed() then
             love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
         end
     end
 
-    return triangle
+    return redTriangle
 end
