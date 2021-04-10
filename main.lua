@@ -1,3 +1,13 @@
+spawnCooldown = 0
+circleCooldown = 10
+vx = 1.25
+difficulty = "Medium"
+isMuted = false
+obstacles = {} --'triangle(x, y)' is how you add a triangle
+apples = {}
+velocityChange = 0
+local file = love.filesystem.newFile("assets/savedata.txt")
+
 love.load = function ()
     image = love.graphics.newImage("assets/Srek_bad_drawing.png")
     print("spelet har laddat klart")
@@ -18,24 +28,16 @@ love.load = function ()
         table.insert(buttons, button(300, 250, "Options"))
         table.insert(buttons, button(300, 400, "Exit Game"))
     end
-    obstacles = {} --'triangle(x, y)' is how you add a triangle
-    apples = {}
     math.randomseed(os.time())
     enemySpawner = function ()
-        table.insert(obstacles, triangle(love.math.random(-50, 550), -100))
+        table.insert(obstacles, triangle(love.math.random(-50, 650), -100))
     end
     appleSpawner = function ()
         obstacles = {} --empties the obstacles table, no triangles fall at the same time as apples
-        table.insert(apples, apple(love.math.random(-50, 550), -100))
+        table.insert(apples, apple(love.math.random(-50, 650), -100))
     end
-    spawnCooldown = 0
-    circleCooldown = 10
-    vx = 1.25
-    difficulty = "Medium"
-    isMuted = false
     musicTrack = love.audio.newSource("assets/bensound-epic.mp3", "stream")
     musicTrack:setVolume(0.4)
-    velocityChange = 0
 end
 
 love.draw = function()
@@ -46,9 +48,9 @@ love.draw = function()
         love.graphics.print('GAME OVER', 280, 0, 0, 2, 2)
         love.graphics.setColor(255,255,255)
         love.graphics.print('Your score was: ' .. score, 260, 50, 0, 1.5, 1.5)
-        love.graphics.print('Easy-Mode High-Score: ' .. easyHS, 200, 90, 0, 1, 1)
-        love.graphics.print('Medium-Mode High-Score: ' .. mediumHS, 200, 110, 0, 1, 1)
-        love.graphics.print('Hard-Mode High-Score: ' .. hardHS, 200, 130, 0, 1, 1)
+        love.graphics.print('Easy-Mode High-Score: ' .. saveData.easyHS, 200, 90, 0, 1, 1)
+        love.graphics.print('Medium-Mode High-Score: ' .. saveData.mediumHS, 200, 110, 0, 1, 1)
+        love.graphics.print('Hard-Mode High-Score: ' .. saveData.hardHS, 200, 130, 0, 1, 1)
         love.graphics.setColor(25, 0, 0)
         love.graphics.draw(image, 20, 250)
     end
@@ -74,7 +76,7 @@ love.draw = function()
     if not (state.main_menu or state.options or state.game_over) then
         love.graphics.print('Score: ' .. score, 0, 0, 0, 1.5, 1.5)
         love.graphics.print(vx, 0, 25, 0, 1, 1) --REMOVE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        love.graphics.print('Keep trash off of Sreks lawn!', 250, 50)    
+        love.graphics.print('Protect Sreks lawn!', 300, 50)    
         love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
         love.graphics.setColor(255, 0, 0)
         for _, redTriangle in ipairs(obstacles) do --draw all triangles in obstacles table
@@ -126,34 +128,41 @@ love.update = function (dt)
             state.game_over = true
             table.insert(buttons, button(300, 200, 'Main Menu'))
             table.insert(buttons, button(300, 350, 'Exit Game'))
-            if (score > easyHS) and difficulty == 'Easy' then
-                easyHS = score
-                love.graphics.print('Congratulations, you beat the highscore for easy mode!', 200, 70, 0, 1, 1)
-             elseif (score > mediumHS) and (difficulty == 'Medium') and state.game_over then
-                mediumHS = score
-                love.graphics.print('Congratulations, you beat the highscore for medium mode!', 200, 70)
-             elseif score > hardHS and difficulty == 'Hard' and state.game_over then
-                hardHS = score
-                love.graphics.print('Congratulations, you beat the highscore for hard mode!', 200, 70)
+            
+            if (score > saveData.easyHS) and difficulty == 'Easy' then
+                saveData.easyHS = score
+                file:open("w")
+                file:write(saveData.easyHS)
+                file:close()
+             elseif (score > saveData.mediumHS) and (difficulty == 'Medium') and state.game_over then
+                saveData.mediumHS = score
+                file:open("w")
+                file:write(saveData.mediumHS)
+                file:close()
+             elseif score > saveData.hardHS and difficulty == 'Hard' and state.game_over then
+                saveData.hardHS = score
+                file:open("w")
+                file:write(saveData.hardHS)
+                file:close()
              end
         end
         if checkCollision(redTriangle.fixture, basket.fixture) then
             table.remove(obstacles, i) --removes colliding triangle from obstacles table
-            redTriangle.fixture:destroy() --destroys the colliding triangles fixture
+            redTriangle.body:destroy() --destroys the colliding triangles fixture
             score = score + 1
             velocityChange = velocityChange + 1
         end
     end
     for i, greenApple in ipairs(apples) do
-        if checkCollision(greenApple.fixture, ground.fixture) then
+        if checkCollision(greenApple.fixture, ground.fixture) then -- gain a point when apple falls on ground
             table.remove(apples, i)
-            --greenApple.fixture:destroy()
+            greenApple.body:setPosition(-200, 600) --temporary solution to a bug, not sure if effective.
             score = score + 1
             velocityChange = velocityChange + 1
         end
         if checkCollision(greenApple.fixture, basket.fixture) then --lose a point when you pick apple up
             table.remove(apples, i)
-            --greenApple.fixture:destroy()
+            greenApple.body:destroy()
             score = score - 1
         end
     end

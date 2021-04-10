@@ -9,10 +9,6 @@ return function (x, y) --function for spawning seeds at x, y
     greenApple.fixture = love.physics.newFixture(greenApple.body, greenApple.shape, 1)
     greenApple.fixture:setUserData(greenApple)
 
-    greenApple.beginContact = function ()
-        --greenApple.fixture:destroy()
-    end
-
     greenApple.draw = function (self)
         love.graphics.setColor(0,255,0)
         if not greenApple.fixture:isDestroyed() then
