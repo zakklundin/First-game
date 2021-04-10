@@ -41,31 +41,34 @@ end
 love.draw = function()
     local font = love.graphics.newFont('assets/OpenSans-Bold.ttf', 20)
     love.graphics.setFont(font)
-    love.graphics.setColor(1,1,1)
-    if state.game_over then        
+    if state.game_over then
+        love.graphics.setColor(255,0,0)
         love.graphics.print('GAME OVER', 280, 0, 0, 2, 2)
+        love.graphics.setColor(255,255,255)
         love.graphics.print('Your score was: ' .. score, 260, 50, 0, 1.5, 1.5)
         love.graphics.print('Easy-Mode High-Score: ' .. easyHS, 200, 90, 0, 1, 1)
         love.graphics.print('Medium-Mode High-Score: ' .. mediumHS, 200, 110, 0, 1, 1)
         love.graphics.print('Hard-Mode High-Score: ' .. hardHS, 200, 130, 0, 1, 1)
         love.graphics.setColor(25, 0, 0)
+        love.graphics.draw(image, 20, 250)
     end
-    love.graphics.draw(image, 300, 300)
     love.graphics.setColor(255, 255, 255)
     if state.paused then
         love.graphics.print('PAUSED', 320, 0, 0, 2, 2)
     end
     if state.options then
         love.graphics.print('Set difficulty:', 300, 200, 0, 1.5, 1.5) 
-        love.graphics.print('OPTIONS', 320, 0, 0, 2, 2)
+        love.graphics.print('OPTIONS', 310, 0, 0, 2, 2)
     end
     if state.main_menu then
         love.graphics.print('SREKS LAWN', (love.graphics.getWidth()/2 - 120), 0, 0, 2, 2)
+        love.graphics.setColor(1,1,1) --transparent so that Srek image is visable
+        love.graphics.draw(image, 20, 250)
     end
     if state.main_menu or state.options then
-        love.graphics.print('Difficulty is set to ' .. difficulty, 225, 500, 0, 1, 1)
+        love.graphics.print('Difficulty is set to ' .. difficulty, 270, 500, 0, 1, 1)
         if isMuted then
-            love.graphics.print('Game is muted', 225, 520, 0, 1, 1)
+            love.graphics.print('Game is muted', 320, 520, 0, 1, 1)
         end
     end
     if not (state.main_menu or state.options or state.game_over) then
