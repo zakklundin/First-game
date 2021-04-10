@@ -1,7 +1,5 @@
 local world = require('world')
 local state = require('state')
-score = require("entities/score")
-local triangle = require('entities/triangle')
 
 local ground = {}
 ground.body = love.physics.newBody(world, 400, 600)

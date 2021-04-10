@@ -7,7 +7,7 @@ beginContact = function (a, b, coll)
   x,y = coll:getNormal()
 end
 
-checkCollision = function (A, B) --A is object that falls
+checkCollision = function (A, B) --checks if the distance between two fixtures is less than "1", and returns a boolean
   if love.physics.getDistance(A, B) <= 1 then
     return true
   end

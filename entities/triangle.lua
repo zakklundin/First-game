@@ -1,6 +1,6 @@
 local world = require('world')
 
-local x1 = 200
+local x1 = 200 --CHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 local y1 = -100
 local x2 = 300
 local y2 = -100
@@ -15,8 +15,8 @@ return function (x, y) -- returns a function so that i can spawn a redTriangle a
     redTriangle.fixture = love.physics.newFixture(redTriangle.body, redTriangle.shape, 1)
     redTriangle.fixture:setUserData(redTriangle)
 
-    redTriangle.beginContact = function (self)
-        self.fixture:destroy()
+    redTriangle.beginContact = function ()
+        --redTriangle.fixture:destroy()
     end
 
     redTriangle.draw = function (self)
