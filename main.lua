@@ -34,8 +34,9 @@ love.load = function ()
     end
 
     math.randomseed(os.time())
-    musicTrack = love.audio.newSource("assets/bensound-epic.mp3", "stream")
-    musicTrack:setVolume(0.4)
+    musicTrack = love.audio.newSource("assets/bensound-funnysong.mp3", "stream")
+    musicTrack:setVolume(0.5)
+    musicTrack:setLooping(true)
 end
 
 --Functions that spawn trash bags and apples at random x coordinates
@@ -65,6 +66,7 @@ love.draw = function()
     love.graphics.polygon("fill", ground.body:getWorldPoints(ground.shape:getPoints()))
     love.graphics.setColor(255,255,255)
 
+    --Shows some settings
      if state.main_menu or state.options or state.paused then
         love.graphics.setColor(255,255,255)
         love.graphics.print("Difficulty is set to " .. difficulty, 270, 550)
