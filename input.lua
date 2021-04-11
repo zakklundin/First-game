@@ -1,15 +1,27 @@
 state = require('state')
 
+love.keypressed = function (pressed_key)
+    if pressed_key == 'escape' and not (state.main_menu or state.options or state.game_over) then
+        state.paused = not state.paused
+        buttons = {} --makes sure no other buttons show when pausing game
+        table.insert(buttons, button(300, 100, 'Resume'))
+        table.insert(buttons, button(300, 250, 'Main Menu'))
+        table.insert(buttons, button(300, 400, 'Exit Game'))
+    elseif pressed_key == 'r' then
+        love.event.quit('restart')
+    end
+end
+
 love.mousepressed = function (mouseX, mouseY, mouseButton)
     if mouseButton == 1 and state.main_menu then --1 means left mouse button
-        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 100 and mouseY < (100 + 100) then --checks if mouse cursor is within button limits
+        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 60 and mouseY < (60 + 100) then --checks if mouse cursor is within button limits
             state.main_menu = not state.main_menu
             buttons = {}
             if not isMuted then
                 musicTrack:play()
             end
         end
-        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 250 and mouseY < (250 + 100) then
+        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 185 and mouseY < (185 + 100) then
             state.main_menu = not state.main_menu
             buttons = {} --clears buttons table
             state.options = not state.options 
@@ -17,7 +29,13 @@ love.mousepressed = function (mouseX, mouseY, mouseButton)
             table.insert(buttons, button(75, 250, "Easy")) table.insert(buttons, button(300, 250, "Medium")) table.insert(buttons, button(525, 250, "Hard"))
             table.insert(buttons, button(300, 400, "Back"))
         end
-        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 400 and mouseY < (400 + 100) then
+        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 310 and mouseY < (310 + 100) then
+            state.main_menu = not state.main_menu
+            buttons = {}
+            state.tutorial = not state.tutorial
+            table.insert(buttons, button(300, 435, "Back"))
+        end
+        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 435 and mouseY < (435 + 100) then
             love.event.quit()
         end
     end
@@ -41,9 +59,10 @@ love.mousepressed = function (mouseX, mouseY, mouseButton)
             state.options = not state.options
             buttons = {}
             state.main_menu = not state.main_menu
-            table.insert(buttons, button(300, 100, "Start Game"))
-            table.insert(buttons, button(300, 250, "Options"))
-            table.insert(buttons, button(300, 400, "Exit Game"))
+            table.insert(buttons, button(300, 60, "Start Game"))
+            table.insert(buttons, button(300, 185, "Options"))
+            table.insert(buttons, button(300, 310, "Tutorial"))
+            table.insert(buttons, button(300, 435, "Exit Game"))
         end
     end
     if mouseButton == 1 and state.paused then
@@ -66,16 +85,15 @@ love.mousepressed = function (mouseX, mouseY, mouseButton)
             love.event.quit()
         end
     end
-end
-
-love.keypressed = function (pressed_key)
-    if pressed_key == 'escape' and not (state.main_menu or state.options or state.game_over) then
-        state.paused = not state.paused
-        buttons = {} --makes sure no other buttons show when pausing game
-        table.insert(buttons, button(300, 100, 'Resume'))
-        table.insert(buttons, button(300, 250, 'Main Menu'))
-        table.insert(buttons, button(300, 400, 'Exit Game'))
-    elseif pressed_key == 'r' then
-        love.event.quit('restart')
+    if mouseButton == 1 and state.tutorial then
+        if mouseX > 300 and mouseX < (300 + 200) and mouseY > 435 and mouseY < (435 + 100) then
+            state.tutorial = not state.tutorial
+            buttons = {}
+            state.main_menu = not state.main_menu
+            table.insert(buttons, button(300, 60, "Start Game"))
+            table.insert(buttons, button(300, 185, "Options"))
+            table.insert(buttons, button(300, 310, "Tutorial"))
+            table.insert(buttons, button(300, 435, "Exit Game"))
+        end
     end
 end

@@ -14,6 +14,7 @@ love.load = function ()
     print('escape to pause, r to restart')
     love.graphics.setBackgroundColor(0, 0, 15)
     input = require('input')
+    tutorialPage = require("tutorial")
     ground = require('entities/ground')
     triangle = require('entities/triangle')
     apple = require('entities/greenApple')
@@ -24,9 +25,10 @@ love.load = function ()
     button = require('entities/button')
     buttons = {}
     if state.main_menu then
-        table.insert(buttons, button(300, 100, "Start Game"))
-        table.insert(buttons, button(300, 250, "Options"))
-        table.insert(buttons, button(300, 400, "Exit Game"))
+        table.insert(buttons, button(300, 60, "Start Game"))
+        table.insert(buttons, button(300, 185, "Options"))
+        table.insert(buttons, button(300, 310, "Tutorial"))
+        table.insert(buttons, button(300, 435, "Exit Game"))
     end
     math.randomseed(os.time())
     enemySpawner = function ()
@@ -48,9 +50,9 @@ love.draw = function()
         love.graphics.print('GAME OVER', 280, 0, 0, 2, 2)
         love.graphics.setColor(255,255,255)
         love.graphics.print('Your score was: ' .. score, 260, 50, 0, 1.5, 1.5)
-        love.graphics.print('Easy-Mode High-Score: ' .. saveData.easyHS, 200, 90, 0, 1, 1)
-        love.graphics.print('Medium-Mode High-Score: ' .. saveData.mediumHS, 200, 110, 0, 1, 1)
-        love.graphics.print('Hard-Mode High-Score: ' .. saveData.hardHS, 200, 130, 0, 1, 1)
+        love.graphics.print('Easy-Mode High-Score: ' .. saveData.easyHS, 200, 90)
+        love.graphics.print('Medium-Mode High-Score: ' .. saveData.mediumHS, 200, 110)
+        love.graphics.print('Hard-Mode High-Score: ' .. saveData.hardHS, 200, 130)
         love.graphics.setColor(25, 0, 0)
         love.graphics.draw(image, 20, 250)
     end
@@ -59,7 +61,7 @@ love.draw = function()
         love.graphics.print('PAUSED', 320, 0, 0, 2, 2)
     end
     if state.options then
-        love.graphics.print('Set difficulty:', 300, 200, 0, 1.5, 1.5) 
+        love.graphics.print('Set difficulty:', 300, 200, 0, 1.5, 1.5)
         love.graphics.print('OPTIONS', 310, 0, 0, 2, 2)
     end
     if state.main_menu then
@@ -67,16 +69,19 @@ love.draw = function()
         love.graphics.setColor(1,1,1) --transparent so that Srek image is visable
         love.graphics.draw(image, 20, 250)
     end
+    love.graphics.setColor(0, 15, 0)
+    love.graphics.polygon('fill', ground.body:getWorldPoints(ground.shape:getPoints()))
+    love.graphics.setColor(255,255,255)
     if state.main_menu or state.options then
-        love.graphics.print('Difficulty is set to ' .. difficulty, 270, 500, 0, 1, 1)
+        love.graphics.print('Difficulty is set to ' .. difficulty, 270, 550)
         if isMuted then
-            love.graphics.print('Game is muted', 320, 520, 0, 1, 1)
+            love.graphics.print('Game is muted', 320, 570)
         end
     end
-    if not (state.main_menu or state.options or state.game_over) then
+    if not (state.main_menu or state.options or state.game_over or state.tutorial) then
         love.graphics.print('Score: ' .. score, 0, 0, 0, 1.5, 1.5)
-        love.graphics.print(vx, 0, 25, 0, 1, 1) --REMOVE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        love.graphics.print('Protect Sreks lawn!', 300, 50)    
+        love.graphics.print("Speed multiplier: " .. vx, 0, 30) --gives player info on how speed increases
+        love.graphics.print('Protect Sreks lawn!', 300, 50)
         love.graphics.setColor(255, 0, 0)
         for _, redTriangle in ipairs(obstacles) do --draw all triangles in obstacles table
             if redTriangle.draw then redTriangle:draw() end
@@ -87,17 +92,18 @@ love.draw = function()
         love.graphics.setColor(255,255,255)
         basket:draw()
     end
-    love.graphics.setColor(0, 15, 0)
-    love.graphics.polygon('fill', ground.body:getWorldPoints(ground.shape:getPoints()))
-    if state.main_menu or state.options or state.paused or state.game_over then --only display buttons in these states
+    if state.main_menu or state.options or state.paused or state.game_over or state.tutorial then --only display buttons in these states
         for _, button in ipairs(buttons) do
             if button.draw then button:draw() end
         end
     end 
+    if state.tutorial then
+        tutorial:draw()
+    end
 end
 
 love.update = function (dt)
-    if state.paused or state.game_over or state.main_menu or state.options then
+    if state.paused or state.game_over or state.main_menu or state.options or state.tutorial then
         return --ends the love.update function if the states are true, which stops world:update (time) function
     end
     local self_x, self_y = basket.body:getPosition()

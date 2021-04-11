@@ -14,7 +14,7 @@ return function (x, y) --function for spawning seeds at x, y
         love.graphics.setColor(0,255,0)
         if not greenApple.fixture:isDestroyed() then
             local cx, cy = self.body:getWorldPoints(self.shape:getPoint())
-            love.graphics.circle('fill', cx, cy, self.shape:getRadius())
+            --love.graphics.circle('fill', cx, cy, self.shape:getRadius())  --(to see actual objects trajectory)
             love.graphics.draw(appleImage, cx - 35, cy - 40, 0, 0.022, 0.022)
         end
     end
