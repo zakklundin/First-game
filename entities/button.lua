@@ -1,6 +1,6 @@
-local world = require('world')
-local state = require('state')
+local world = require("world")
 
+--Returns a function that is used to create a button on x, y in main, with 'str' as title
 return function (x, y, str)
     local button = {}
     button.body = love.physics.newBody(world, x, y)
@@ -8,7 +8,7 @@ return function (x, y, str)
 
     button.draw = function ()
         love.graphics.setColor(0, 30, 15)
-        love.graphics.rectangle('fill', x, y, 200, 100)
+        love.graphics.rectangle("fill", x, y, 200, 100)
         love.graphics.setColor(255,255,255)
         love.graphics.print(str, x, y, 0, 1.5, 1.5)
     end

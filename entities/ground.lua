@@ -1,5 +1,4 @@
-local world = require('world')
-local state = require('state')
+local world = require("world")
 
 local ground = {}
 ground.body = love.physics.newBody(world, 400, 600)
