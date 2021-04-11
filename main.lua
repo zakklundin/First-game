@@ -79,7 +79,7 @@ love.draw = function()
     if not (state.main_menu or state.options or state.game_over or state.tutorial) then
         love.graphics.print("Score: " .. score, 0, 0, 0, 1.5, 1.5)
         love.graphics.print("Speed multiplier: " .. vx, 0, 30)
-        love.graphics.print("Protect Sreks lawn!", 300, 50)
+        love.graphics.print("Keep trash off of Sreks lawn!", 250, 50)
         love.graphics.setColor(255, 0, 0)
 
         --draw all triangles in obstacles table
@@ -92,6 +92,20 @@ love.draw = function()
         end
         love.graphics.setColor(255,255,255)
         basket:draw()
+
+        --Feedback during gameplay
+        if 10 <= score and score < 20 then
+            love.graphics.print("Okay!", 0, 50)
+        elseif 20 <= score and score < 30  then
+            love.graphics.print("Good!", 0, 50)
+        elseif 30 <= score and score < 40 then
+            love.graphics.print("Great", 0, 50)
+        elseif 40 <= score and score < 50 then
+            love.graphics.print("Awesome!", 0, 50)
+        elseif 50 <= score then
+            love.graphics.print("HOW?!", 0, 50)
+        end
+
     end
 
     --Only display buttons in these states
@@ -150,22 +164,10 @@ love.update = function (dt)
             table.insert(buttons, button(300, 350, 'Exit Game'))
             if (score > saveData.easyHS) and difficulty == 'Easy' then
                 saveData.easyHS = score
-                love.filesystem.write("assets/savedata.txt", saveData.easyHS)
-                --[[file:open("w")
-                file:write(saveData.easyHS)
-                file:close()]]
              elseif (score > saveData.mediumHS) and (difficulty == 'Medium') and state.game_over then
                 saveData.mediumHS = score
-                love.filesystem.write("assets/savedata.txt", saveData.mediumHS)
-                --[[file:open("w")
-                file:write(saveData.mediumHS)
-                file:close()]]
              elseif score > saveData.hardHS and difficulty == 'Hard' and state.game_over then
                 saveData.hardHS = score
-                love.filesystem.write("assets/savedata.txt", saveData.hardHS)
-                --[[file:open("w")
-                file:write(saveData.hardHS)
-                file:close()]]
              end
         end
         if checkCollision(trashBag.fixture, basket.fixture) then
