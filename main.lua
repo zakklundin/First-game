@@ -77,7 +77,6 @@ love.draw = function()
         love.graphics.print('Score: ' .. score, 0, 0, 0, 1.5, 1.5)
         love.graphics.print(vx, 0, 25, 0, 1, 1) --REMOVE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         love.graphics.print('Protect Sreks lawn!', 300, 50)    
-        love.graphics.polygon('fill', basket.body:getWorldPoints(basket.shape:getPoints()))
         love.graphics.setColor(255, 0, 0)
         for _, redTriangle in ipairs(obstacles) do --draw all triangles in obstacles table
             if redTriangle.draw then redTriangle:draw() end
@@ -85,6 +84,8 @@ love.draw = function()
         for _, greenApple in ipairs(apples) do --draw all apples in apples table
             if greenApple.draw then greenApple:draw() end
         end
+        love.graphics.setColor(255,255,255)
+        basket:draw()
     end
     love.graphics.setColor(0, 15, 0)
     love.graphics.polygon('fill', ground.body:getWorldPoints(ground.shape:getPoints()))
@@ -128,22 +129,24 @@ love.update = function (dt)
             state.game_over = true
             table.insert(buttons, button(300, 200, 'Main Menu'))
             table.insert(buttons, button(300, 350, 'Exit Game'))
-            
             if (score > saveData.easyHS) and difficulty == 'Easy' then
                 saveData.easyHS = score
-                file:open("w")
+                love.filesystem.write("assets/savedata.txt", saveData.easyHS)
+                --[[file:open("w")
                 file:write(saveData.easyHS)
-                file:close()
+                file:close()]]
              elseif (score > saveData.mediumHS) and (difficulty == 'Medium') and state.game_over then
                 saveData.mediumHS = score
-                file:open("w")
+                love.filesystem.write("assets/savedata.txt", saveData.mediumHS)
+                --[[file:open("w")
                 file:write(saveData.mediumHS)
-                file:close()
+                file:close()]]
              elseif score > saveData.hardHS and difficulty == 'Hard' and state.game_over then
                 saveData.hardHS = score
-                file:open("w")
+                love.filesystem.write("assets/savedata.txt", saveData.hardHS)
+                --[[file:open("w")
                 file:write(saveData.hardHS)
-                file:close()
+                file:close()]]
              end
         end
         if checkCollision(redTriangle.fixture, basket.fixture) then

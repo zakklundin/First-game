@@ -1,11 +1,11 @@
 local world = require('world')
-
+local trashImage = love.graphics.newImage("assets/trash_bag.png")
 local x1 = 0
-local y1 = -90
+local y1 = 0
 local x2 = 90
-local y2 = -90
+local y2 = -0
 local x3 = 45
-local y3 = 0
+local y3 = -90
 
 return function (x, y) -- returns a function so that i can spawn a redTriangle at (x, y) in main
     local redTriangle = {}
@@ -18,7 +18,8 @@ return function (x, y) -- returns a function so that i can spawn a redTriangle a
     redTriangle.draw = function (self)
         love.graphics.setColor(255, 0, 0)
         if not redTriangle.fixture:isDestroyed() then
-            love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
+            --love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
+            love.graphics.draw(trashImage, redTriangle.body:getX() - 7, redTriangle.body:getY() -95, 0, 0.12, 0.12)
         end
     end
 

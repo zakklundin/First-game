@@ -1,5 +1,6 @@
 local world = require('world')
 local state = require('state')
+local appleImage = love.graphics.newImage("assets/greenapple.png")
 
 return function (x, y) --function for spawning seeds at x, y
     local greenApple = {}
@@ -14,6 +15,7 @@ return function (x, y) --function for spawning seeds at x, y
         if not greenApple.fixture:isDestroyed() then
             local cx, cy = self.body:getWorldPoints(self.shape:getPoint())
             love.graphics.circle('fill', cx, cy, self.shape:getRadius())
+            love.graphics.draw(appleImage, cx - 35, cy - 40, 0, 0.022, 0.022)
         end
     end
     return greenApple

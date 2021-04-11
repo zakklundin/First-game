@@ -12,6 +12,8 @@ right arrow: move right
 
 ## Credits
 Music: Royalty Free Music from Bensound "EPIC"
+Apple: SeekPNG
+Trash bag: TopPNG
 
 ## Todo
 - Scoreboard with all time high-scores?
