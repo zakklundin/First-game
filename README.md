@@ -17,7 +17,6 @@ Apple: SeekPNG
 Trash bag: TopPNG
 
 ## Future improvements
-- Scoreboard with all time high-scores?
 - Sound effects?
 - Nicer graphics and images?
 - Draw a better "Srek"?

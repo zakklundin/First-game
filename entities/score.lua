@@ -1,22 +1,12 @@
-score = 0
-saveData = {}
-saveData.easyHS = 0
-saveData.mediumHS = 0
-saveData.hardHS = 0
-
---Functions for saving highscore, currently in progress.
 saveHighscore = function (hs)
-    local file = love.filesystem.newFile("assets/savedata.txt")
-    file:open("w")
-    file:write(hs)
-    file:close()
+    love.filesystem.write("savedata.sav", hs)
 end
 
 loadHighscore = function ()
-    local file = love.filesystem.newFile("assets/savedata.txt")
-    file:open("r")
-    saveData = file:read(saveData)
-    file:close()
+    local highScore = love.filesystem.read("savedata.sav")
+    if highScore == nil then
+        highScore = 0
+    end
+ 
+    return highScore
 end
-
-return score

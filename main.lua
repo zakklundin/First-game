@@ -4,7 +4,7 @@ difficulty = "Medium"
 isMuted = false
 world = require("world")
 state = require("state")
-score = require("entities/score")
+require("entities/score")
 button = require("entities/button")
 buttons = {}
 
@@ -18,6 +18,7 @@ local apple = require("entities/greenApple")
 local velocityChange = 0
 local spawnCooldown = 0
 local circleCooldown = 10
+highScore = 0
 
 love.load = function ()
 
@@ -33,10 +34,15 @@ love.load = function ()
         table.insert(buttons, button(300, 435, "Exit Game"))
     end
 
+
     math.randomseed(os.time())
     musicTrack = love.audio.newSource("assets/bensound-funnysong.mp3", "stream")
     musicTrack:setVolume(0.5)
     musicTrack:setLooping(true)
+
+    score = 0
+    highScore = loadHighscore()
+
 end
 
 --Functions that spawn trash bags and apples at random x coordinates
@@ -162,12 +168,10 @@ love.update = function (dt)
             state.game_over = true
             table.insert(buttons, button(300, 200, 'Main Menu'))
             table.insert(buttons, button(300, 350, 'Exit Game'))
-            if (score > saveData.easyHS) and difficulty == 'Easy' then
-                saveData.easyHS = score
-             elseif (score > saveData.mediumHS) and (difficulty == 'Medium') and state.game_over then
-                saveData.mediumHS = score
-             elseif score > saveData.hardHS and difficulty == 'Hard' and state.game_over then
-                saveData.hardHS = score
+
+            if (score > tonumber(highScore)) then
+                highScore = score
+                saveHighscore(highScore)
              end
         end
         if checkCollision(trashBag.fixture, basket.fixture) then
