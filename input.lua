@@ -7,7 +7,7 @@ love.keypressed = function (pressed_key)
         table.insert(buttons, button(300, 250, "Main Menu"))
         table.insert(buttons, button(300, 400, "Exit Game"))
 
-        --Fix to bug where pause buttons would show in game over
+        --Fix to bug where pause buttons would show in game over menu
         if not state.paused then
             buttons = {}
         end

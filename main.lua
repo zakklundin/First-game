@@ -1,10 +1,10 @@
 require("input")
+require("entities/score")
 vx = 1.30
 difficulty = "Medium"
 isMuted = false
 world = require("world")
 state = require("state")
-require("entities/score")
 button = require("entities/button")
 buttons = {}
 highScore = 0
@@ -97,7 +97,7 @@ love.draw = function()
             love.graphics.print("FPS is shown", 670, 570)
         end
     end
-    
+
     --What to draw in gameplay
     if not (state.main_menu or state.options or state.game_over or state.tutorial) then
         love.graphics.print("Score: " .. score, 0, 0, 0, 1.5, 1.5)

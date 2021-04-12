@@ -5,7 +5,7 @@ end
 loadHighscore = function ()
     local highScore = love.filesystem.read("savedata.sav")
 
-    --First time opening game highscore will return nil
+    --First time opening game highscore will be nil, needs to be a number
     if highScore == nil then
         highScore = 0
     end

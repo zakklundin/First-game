@@ -16,9 +16,3 @@ Collect trash bags that fall from the sky, if they touch the ground it's game ov
 - Apple: SeekPNG
 - Trash bag: TopPNG
 - Sound Effects: mixkit
-
-## Future improvements
-- Sound effects?
-- Nicer graphics and images?
-- Draw a better "Srek"?
-- Add different modes, other than difficulties.
