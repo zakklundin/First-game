@@ -9,6 +9,7 @@ button = require("entities/button")
 buttons = {}
 highScore = 0
 showSpeedX = false
+showFPS = false
 
 local basket = require("entities/trash_basket")
 local menus = require("menus")
@@ -67,6 +68,10 @@ love.draw = function()
     love.graphics.setBackgroundColor(0, 0, 15)
     love.graphics.setFont(font)
 
+    if showFPS then
+        love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 720, 0)
+    end
+
     menus:draw()
 
     love.graphics.setColor(255, 255, 255)
@@ -86,7 +91,10 @@ love.draw = function()
             love.graphics.print("Game is muted", 0, 570)
         end
         if showSpeedX then
-            love.graphics.print("Speed multiplier is shown during gameplay", 200, 570)
+            love.graphics.print("Speed multiplier is shown during gameplay", 190, 570)
+        end
+        if showFPS then
+            love.graphics.print("FPS is shown", 670, 570)
         end
     end
     
@@ -206,7 +214,7 @@ love.update = function (dt)
             greenApple.body:setPosition(-200, 600) --temporary solution to a bug, not sure if effective.
             score = score + 1
             velocityChange = velocityChange + 1
-            
+
             if not isMuted then
                 appleContactSound:play()
             end

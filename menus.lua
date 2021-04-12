@@ -41,6 +41,7 @@ menus.draw = function ()
     end
 
     if state.options then
+        love.graphics.print("Diverse settings:", 275, 50, 0, 1.5, 1.5)
         love.graphics.print("Set difficulty:", 300, 200, 0, 1.5, 1.5)
         love.graphics.print("OPTIONS", 310, 0, 0, 2, 2)
     end
