@@ -1,8 +1,8 @@
-## Srek's lawn
+## Srek's Lawn
 You need to keep Srek's lawn clean from falling objects! If you fail he gets mad!
 
 ## Instructions
-Collect red triangles that fall from the sky. Sometimes, on medium and hard difficulties, an apple falls from the sky, and Srek wants apples to land on his lawn. Collecting apples will result in losing a point, while letting them land on ground adds a point.
+Collect trash bags that fall from the sky. Sometimes, on medium and hard difficulties, an apple falls from the sky, and Srek wants apples to land on his lawn. Collecting apples will result in losing a point, while letting them land on ground adds a point.
 
 ## Controls
 Mouse left-click: Click buttons in menus
@@ -20,4 +20,4 @@ Trash bag: TopPNG
 - Sound effects?
 - Nicer graphics and images?
 - Draw a better "Srek"?
-- Add different modes, other
+- Add different modes, other than difficulties.

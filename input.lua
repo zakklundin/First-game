@@ -26,7 +26,10 @@ love.mousepressed = function (mouseX, mouseY, mouseButton)
             buttons = {}
             state.options = not state.options 
             table.insert(buttons, button(300, 100, "Mute Sound"))
-            table.insert(buttons, button(75, 250, "Easy")) table.insert(buttons, button(300, 250, "Medium")) table.insert(buttons, button(525, 250, "Hard"))
+            table.insert(buttons, button(75, 100, "Show Speed"))
+            table.insert(buttons, button(75, 250, "Easy"))
+            table.insert(buttons, button(300, 250, "Medium"))
+            table.insert(buttons, button(525, 250, "Hard"))
             table.insert(buttons, button(300, 400, "Back"))
         end
         if mouseX > 300 and mouseX < (300 + 200) and mouseY > 310 and mouseY < (310 + 100) then
@@ -44,16 +47,19 @@ love.mousepressed = function (mouseX, mouseY, mouseButton)
         if mouseX > 300 and mouseX < (300 + 200) and mouseY > 100 and mouseY < (100 + 100) then
             isMuted = not isMuted
         end
+        if mouseX > 75 and mouseX < (75 + 200) and mouseY > 100 and mouseY < (100 + 100) then
+            showSpeedX = not showSpeedX
+        end
         if mouseX > 75 and mouseX < (75 + 200) and mouseY > 250 and mouseY < (250 + 100) then
             vx = 1.0
             difficulty = "Easy"
         end
         if mouseX > 300 and mouseX < (300 + 200) and mouseY > 250 and mouseY < (250 + 100) then
-           vx = 1.25
+           vx = 1.30
            difficulty = "Medium"
         end
         if mouseX > 525 and mouseX < (525 + 200) and mouseY > 250 and mouseY < (250 + 100) then
-           vx = 1.5
+           vx = 1.60
            difficulty = "Hard"
         end
         if mouseX > 300 and mouseX < (300 + 200) and mouseY > 400 and mouseY < (400 + 100) then

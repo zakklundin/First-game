@@ -1,5 +1,5 @@
 require("input")
-vx = 1.25
+vx = 1.30
 difficulty = "Medium"
 isMuted = false
 world = require("world")
@@ -7,6 +7,8 @@ state = require("state")
 require("entities/score")
 button = require("entities/button")
 buttons = {}
+highScore = 0
+showSpeedX = false
 
 local basket = require("entities/trash_basket")
 local menus = require("menus")
@@ -18,7 +20,6 @@ local apple = require("entities/greenApple")
 local velocityChange = 0
 local spawnCooldown = 0
 local circleCooldown = 10
-highScore = 0
 
 love.load = function ()
 
@@ -77,14 +78,20 @@ love.draw = function()
         love.graphics.setColor(255,255,255)
         love.graphics.print("Difficulty is set to " .. difficulty, 270, 550)
         if isMuted then
-            love.graphics.print("Game is muted", 320, 570)
+            love.graphics.print("Game is muted", 0, 570)
+        end
+        if showSpeedX then
+            love.graphics.print("Speed multiplier is shown during gameplay", 200, 570)
         end
     end
     
     --What to draw in gameplay
     if not (state.main_menu or state.options or state.game_over or state.tutorial) then
         love.graphics.print("Score: " .. score, 0, 0, 0, 1.5, 1.5)
-        love.graphics.print("Speed multiplier: " .. vx, 0, 30)
+        --Shows player how game speed increases
+        if showSpeedX then
+            love.graphics.print("Speed multiplier: " .. vx, 0, 30)
+        end
         love.graphics.print("Keep trash off of Sreks lawn!", 250, 50)
         love.graphics.setColor(255, 0, 0)
 
@@ -99,7 +106,7 @@ love.draw = function()
         love.graphics.setColor(255,255,255)
         basket:draw()
 
-        --Feedback during gameplay
+        --Feedback-messages during gameplay
         if 10 <= score and score < 20 then
             love.graphics.print("Okay!", 0, 50)
         elseif 20 <= score and score < 30  then
