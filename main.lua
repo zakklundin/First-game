@@ -41,6 +41,10 @@ love.load = function ()
     musicTrack:setVolume(0.5)
     musicTrack:setLooping(true)
 
+    gameOverSound = love.audio.newSource("assets/game_over_sound.wav", "static")
+    gameOverSound:setVolume(0.5)
+    appleContactSound = love.audio.newSource("assets/apple_ground.wav", "static")
+
     score = 0
     saveData = loadHighscore()
     highScore = loadHighscore()
@@ -180,7 +184,12 @@ love.update = function (dt)
             if (score > tonumber(highScore)) then
                 highScore = score
                 saveHighscore(highScore)
-             end
+            end
+            if not isMuted then
+                gameOverSound:play()
+                musicTrack:pause()
+            end
+
         end
         if checkCollision(trashBag.fixture, basket.fixture) then
             table.remove(obstacles, i) --removes colliding triangle from obstacles table
@@ -197,11 +206,20 @@ love.update = function (dt)
             greenApple.body:setPosition(-200, 600) --temporary solution to a bug, not sure if effective.
             score = score + 1
             velocityChange = velocityChange + 1
+            
+            if not isMuted then
+                appleContactSound:play()
+            end
+
         end
         if checkCollision(greenApple.fixture, basket.fixture) then --lose a point when you pick apple up
             table.remove(apples, i)
             greenApple.body:destroy()
             score = score - 1
+
+            if not isMuted then
+                appleContactSound:play()
+            end
         end
     end
 

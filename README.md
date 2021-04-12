@@ -15,6 +15,7 @@ Collect trash bags that fall from the sky, if they touch the ground it's game ov
 - Music: Royalty Free Music from Bensound: "Funny Song"
 - Apple: SeekPNG
 - Trash bag: TopPNG
+- Sound Effects: mixkit
 
 ## Future improvements
 - Sound effects?
