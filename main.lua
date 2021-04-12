@@ -54,12 +54,12 @@ end
 
 --Functions that spawn trash bags and apples at random x coordinates
 enemySpawner = function ()
-    table.insert(obstacles, spawnTrashBag(love.math.random(-50, 700), -100))
+    table.insert(obstacles, spawnTrashBag(love.math.random(-50, 750), -100))
 end
 
 appleSpawner = function ()
     obstacles = {} --Empties the obstacles table, no triangles fall at the same time as apples
-    table.insert(apples, apple(love.math.random(0, 700), -100))
+    table.insert(apples, apple(love.math.random(0, 750), -100))
 end
 
 love.draw = function()
@@ -125,7 +125,7 @@ love.draw = function()
         elseif 20 <= score and score < 30  then
             love.graphics.print("Good!", 0, 50)
         elseif 30 <= score and score < 40 then
-            love.graphics.print("Great", 0, 50)
+            love.graphics.print("Great!", 0, 50)
         elseif 40 <= score and score < 50 then
             love.graphics.print("Awesome!", 0, 50)
         elseif 50 <= score then
