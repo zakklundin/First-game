@@ -42,6 +42,7 @@ love.load = function ()
     musicTrack:setLooping(true)
 
     score = 0
+    saveData = loadHighscore()
     highScore = loadHighscore()
 
 end

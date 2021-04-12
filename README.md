@@ -1,4 +1,4 @@
-## Srek's Lawn
+# Srek's Lawn
 You need to keep Srek's lawn clean from falling objects! If you fail he gets mad!
 
 ## Instructions
